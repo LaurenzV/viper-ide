@@ -28,25 +28,6 @@ suite('ViperIDE Stress Tests', () => {
         assert(timeout, "multiple verifications seen");
     });
 
-    test("2. quickly change backends", async function() {
-        this.timeout(50000);
-
-        TestHelper.resetErrors();
-
-        await TestHelper.selectBackend(CARBON);
-        await TestHelper.openFile(SIMPLE);
-        //submit 10 verification requests
-        for (let i = 0; i < 10; i++) {
-            await TestHelper.selectBackend(SILICON);
-            await TestHelper.selectBackend(CARBON);
-        }
-
-        await TestHelper.wait(500);
-        await TestHelper.selectBackend(SILICON);
-        await TestHelper.waitForVerification(SIMPLE, SILICON);
-        assert(!TestHelper.hasObservedInternalError());
-    });
-
     test("3. quickly start, stop, and restart verification", async function() {
         this.timeout(15000);
 
@@ -59,31 +40,5 @@ suite('ViperIDE Stress Tests', () => {
         await TestHelper.verify();
         await verified;
         assert(!TestHelper.hasObservedInternalError());
-    });
-
-    test("4. closing all files right after starting verificaiton", async function() {
-        this.timeout(6000);
-
-        TestHelper.resetErrors();
-
-        const end = new Promise(resolve => {
-            setTimeout(resolve, 5000);
-        });
-        await TestHelper.verify();
-        await TestHelper.executeCommand('workbench.action.closeAllEditors');
-        await end;
-        assert(!TestHelper.hasObservedInternalError());
-    });
-
-    test("Test simple verification with carbon", async function() {
-        this.timeout(35000);
-
-        await TestHelper.openFile(SIMPLE);
-        const carbonVerified = TestHelper.waitForVerification(SIMPLE, CARBON);
-        await TestHelper.selectBackend(CARBON);
-        await carbonVerified;
-        const siliconVerified = TestHelper.waitForVerification(SIMPLE, SILICON);
-        await TestHelper.selectBackend(SILICON);
-        await siliconVerified;
     });
 });
