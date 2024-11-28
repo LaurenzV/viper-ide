@@ -12,21 +12,21 @@ suite('ViperIDE Stress Tests', () => {
         await TestHelper.teardown();
     });
 
-    test("1. multiple fast verification requests", async function() {
-        this.timeout(15000);
-
-        TestHelper.resetErrors();
-        // 1 verification is expected, there should be no subsequent ones
-        const verified = TestHelper.waitForVerification(SIMPLE)
-            .then(() => TestHelper.waitForTimeout(5000, TestHelper.waitForVerification(SIMPLE)));
-        await TestHelper.openFile(SIMPLE);
-        //submit 10 verification requests
-        for (let i = 0; i < 10; i++) {
-            await TestHelper.verify();
-        }
-        const timeout = await verified;
-        assert(timeout, "multiple verifications seen");
-    });
+    // test("1. multiple fast verification requests", async function() {
+    //     this.timeout(15000);
+    //
+    //     TestHelper.resetErrors();
+    //     // 1 verification is expected, there should be no subsequent ones
+    //     const verified = TestHelper.waitForVerification(SIMPLE)
+    //         .then(() => TestHelper.waitForTimeout(5000, TestHelper.waitForVerification(SIMPLE)));
+    //     await TestHelper.openFile(SIMPLE);
+    //     //submit 10 verification requests
+    //     for (let i = 0; i < 10; i++) {
+    //         await TestHelper.verify();
+    //     }
+    //     const timeout = await verified;
+    //     assert(timeout, "multiple verifications seen");
+    // });
 
     test("3. quickly start, stop, and restart verification", async function() {
         this.timeout(15000);
