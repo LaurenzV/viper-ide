@@ -271,6 +271,7 @@ function registerContextHandlers(context: vscode.ExtensionContext, location: Loc
 
     context.subscriptions.push(vscode.commands.registerCommand('viper.flushCacheOfActiveFile', async () => flushCache(false)));
 
+
     //selectBackend
     context.subscriptions.push(vscode.commands.registerCommand('viper.selectBackend', async (selectBackend) => {
         // get all backends from configuration:
