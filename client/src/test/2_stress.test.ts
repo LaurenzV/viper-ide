@@ -12,6 +12,7 @@ suite('ViperIDE Stress Tests', () => {
         await TestHelper.teardown();
     });
 
+
     test("1. multiple fast verification requests", async function() {
         this.timeout(15000);
         const startTime = performance.now()
