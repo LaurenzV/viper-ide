@@ -244,6 +244,7 @@ function registerContextHandlers(context: vscode.ExtensionContext, location: Loc
             showNotReadyHint();
             return;
         }
+        console.log("got verify command!");
         const fileUri = Helper.getActiveFileUri();
         if (!fileUri) {
             Log.log("Cannot verify, no document is open.", LogLevel.Info);

@@ -197,6 +197,7 @@ export class VerificationController {
                             clear = i;
                             break;
                         case TaskType.Verify:
+                            console.log("Triggered a verify");
                             if (!task.manuallyTriggered && !State.autoVerify) {
                                 task.type = TaskType.NoOp;
                                 addNotificationForTask(task, () => task.completeFailed(new Error(`verification is skipped because it got neither manually triggered nor is auto-verification enabled`)));
