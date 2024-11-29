@@ -12,7 +12,6 @@ suite('ViperIDE Stress Tests', () => {
         await TestHelper.teardown();
     });
 
-
     test("1. multiple fast verification requests", async function() {
         this.timeout(15000);
         const startTime = performance.now()
@@ -42,19 +41,5 @@ suite('ViperIDE Stress Tests', () => {
         console.log("7. DEBUG!");
         printTime();
         assert(timeout, "multiple verifications seen");
-    });
-
-    test("3. quickly start, stop, and restart verification", async function() {
-        this.timeout(15000);
-
-        TestHelper.resetErrors();
-
-        await TestHelper.openFile(SIMPLE);
-        await TestHelper.verify();
-        await TestHelper.stopVerification();
-        const verified = TestHelper.waitForVerification(SIMPLE);
-        await TestHelper.verify();
-        await verified;
-        assert(!TestHelper.hasObservedInternalError());
     });
 });

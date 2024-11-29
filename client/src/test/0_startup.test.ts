@@ -18,4 +18,18 @@ suite('Extension Startup', () => {
         // otherwise the unit test has failed anyways
         await TestHelper.teardown();
     });
+
+    test("Language Detection, and Silicon Backend Startup test.", async function() {
+        this.timeout(SETUP_TIMEOUT);
+        // this checks that silicon is the default backend
+        const activated = TestHelper.checkIfExtensionIsActivatedOrWaitForIt();
+        const started = TestHelper.waitForBackendStarted(SILICON);
+        TestHelper.log("Language detection - before opening file");
+        await TestHelper.openFile(EMPTY);
+        TestHelper.log("Language detection - after opening file");
+        await activated;
+        TestHelper.log("Language detection - activated");
+        await started;
+        TestHelper.log("Language detection - started");
+    });
 });
