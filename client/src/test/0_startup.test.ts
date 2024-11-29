@@ -32,4 +32,30 @@ suite('Extension Startup', () => {
         await started;
         TestHelper.log("Language detection - started");
     });
+
+    test("Test simple verification with Silicon", async function(){
+        this.timeout(40000);
+        await TestHelper.openAndVerify(SIMPLE);
+    });
+
+    test("Test simple verification with Silicon and a different file", async function(){
+        this.timeout(40000);
+        await TestHelper.openAndVerify(EMPTY);
+    });
+
+    test("Language Detection, and Carbon Backend Startup test.", async function() {
+        this.timeout(40000);
+        const started = TestHelper.waitForBackendStarted(CARBON);
+        await TestHelper.selectBackend(CARBON);
+        await TestHelper.openFile(SIMPLE);
+        await started;
+    });
+
+    test("Test verification with Carbon", async function(){
+        this.timeout(25000);
+        await TestHelper.openAndVerify(LONG);
+        // no need to switch backend back as this is the last test case of this suite.
+        // TestHelper will make sure that the extension is properly restarted for the
+        // next test suite.
+    });
 });
