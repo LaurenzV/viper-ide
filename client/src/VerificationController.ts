@@ -197,20 +197,24 @@ export class VerificationController {
                             clear = i;
                             break;
                         case TaskType.Verify:
-                            console.log("Triggered a verify");
                             if (!task.manuallyTriggered && !State.autoVerify) {
                                 task.type = TaskType.NoOp;
+
+                                console.log("verify skipped1");
                                 addNotificationForTask(task, () => task.completeFailed(new Error(`verification is skipped because it got neither manually triggered nor is auto-verification enabled`)));
                             } else {
                                 //remove all older verify tasks
                                 if (verifyFound || stopFound) {
                                     task.type = TaskType.NoOp;
+                                    console.log("verify skipped2");
                                     addNotificationForTask(task, () => task.completeFailed(new Error(`verification is skipped because it is preceeded by another verify command`)));
                                 } else if ((verificationComplete || verificationFailed) && Common.uriEquals(completedOrFailedFileUri, task.uri)) {
                                     //remove verification requests of just verified file
+                                    console.log("verify skipped3");
                                     task.type = TaskType.NoOp;
                                     addNotificationForTask(task, () => task.completeFailed(new Error(`verification has completed for this file`)));
                                 } else {
+                                    console.log("verify triggered");
                                     verifyFound = true;
                                     uriOfFoundVerfy = task.uri;
                                 }
